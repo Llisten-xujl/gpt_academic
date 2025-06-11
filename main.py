@@ -34,7 +34,7 @@ def encode_plugin_info(k, plugin)->str:
 
 def main():
     import gradio as gr
-    if gr.__version__ not in ['3.32.12']:
+    if gr.__version__ not in ['3.32.14', '3.32.13']:
         raise ModuleNotFoundError("使用项目内置Gradio获取最优体验! 请运行 `pip install -r requirements.txt` 指令安装内置Gradio及其他依赖, 详情信息见requirements.txt.")
 
     # 一些基础工具
@@ -184,7 +184,7 @@ def main():
         from themes.gui_floating_menu import define_gui_floating_menu
         area_input_secondary, txt2, area_customize, _, resetBtn2, clearBtn2, stopBtn2 = \
             define_gui_floating_menu(customize_btns, functional, predefined_btns, cookies, web_cookie_cache)
-        
+
         # 浮动时间线定义
         gr.Spark()
 

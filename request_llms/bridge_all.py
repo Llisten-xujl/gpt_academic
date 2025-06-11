@@ -282,6 +282,7 @@ model_info = {
         "fn_with_ui": chatgpt_ui,
         "fn_without_ui": chatgpt_noui,
         "endpoint": openai_endpoint,
+        "can_multi_thread": True,
         "max_token": 128000,
         "tokenizer": tokenizer_gpt4,
         "token_cnt": get_token_num_gpt4,
@@ -312,6 +313,50 @@ model_info = {
         "openai_disable_system_prompt": True,
         "openai_disable_stream": True,
         "openai_force_temperature_one": True,
+    },
+
+    "gpt-4.1":{
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+    },
+
+    "gpt-4.1-mini":{
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+    },
+
+    "o3":{
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
+        "openai_disable_system_prompt": True,
+        "openai_disable_stream": True,
+        "openai_force_temperature_one": True,
+    },
+
+    "o4-mini":{
+        "fn_with_ui": chatgpt_ui,
+        "fn_without_ui": chatgpt_noui,
+        "has_multimodal_capacity": True,
+        "can_multi_thread": True,
+        "endpoint": openai_endpoint,
+        "max_token": 828000,
+        "tokenizer": tokenizer_gpt4,
+        "token_cnt": get_token_num_gpt4,
     },
 
     "gpt-4-turbo": {
@@ -522,6 +567,15 @@ model_info = {
         "token_cnt": get_token_num_gpt35,
     },
     "gemini-1.5-flash": {
+        "fn_with_ui": genai_ui,
+        "fn_without_ui": genai_noui,
+        "endpoint": gemini_endpoint,
+        "has_multimodal_capacity": True,
+        "max_token": 1024 * 204800,
+        "tokenizer": tokenizer_gpt35,
+        "token_cnt": get_token_num_gpt35,
+    },
+    "gemini-2.0-flash": {
         "fn_with_ui": genai_ui,
         "fn_without_ui": genai_noui,
         "endpoint": gemini_endpoint,
@@ -813,8 +867,12 @@ if "qwen-local" in AVAIL_LLM_MODELS:
         })
     except:
         logger.error(trimmed_format_exc())
-# -=-=-=-=-=-=- 通义-在线模型 -=-=-=-=-=-=-
-qwen_models = ["qwen-max-latest", "qwen-max-2025-01-25","qwen-max","qwen-turbo","qwen-plus"]
+
+# -=-=-=-=-=-=- 阿里云百炼（通义）-在线模型 -=-=-=-=-=-=-
+qwen_models = ["qwen-max-latest", "qwen-max-2025-01-25","qwen-max","qwen-turbo","qwen-plus",
+               "dashscope-deepseek-r1","dashscope-deepseek-v3",
+               "dashscope-qwen3-14b", "dashscope-qwen3-235b-a22b", "dashscope-qwen3-qwen3-32b",
+               ]
 if any(item in qwen_models for item in AVAIL_LLM_MODELS):
     try:
         from .bridge_qwen import predict_no_ui_long_connection as qwen_noui
@@ -864,10 +922,58 @@ if any(item in qwen_models for item in AVAIL_LLM_MODELS):
                 "max_token": 30720,
                 "tokenizer": tokenizer_gpt35,
                 "token_cnt": get_token_num_gpt35,
+            },
+            "dashscope-deepseek-r1": {
+                "fn_with_ui": qwen_ui,
+                "fn_without_ui": qwen_noui,
+                "enable_reasoning": True,
+                "can_multi_thread": True,
+                "endpoint": None,
+                "max_token": 57344,
+                "tokenizer": tokenizer_gpt35,
+                "token_cnt": get_token_num_gpt35,
+            },
+            "dashscope-deepseek-v3": {
+                "fn_with_ui": qwen_ui,
+                "fn_without_ui": qwen_noui,
+                "can_multi_thread": True,
+                "endpoint": None,
+                "max_token": 57344,
+                "tokenizer": tokenizer_gpt35,
+                "token_cnt": get_token_num_gpt35,
+            },
+            "dashscope-qwen3-14b": {
+                "fn_with_ui": qwen_ui,
+                "fn_without_ui": qwen_noui,
+                "enable_reasoning": True,
+                "can_multi_thread": True,
+                "endpoint": None,
+                "max_token": 129024,
+                "tokenizer": tokenizer_gpt35,
+                "token_cnt": get_token_num_gpt35,
+            },
+            "dashscope-qwen3-235b-a22b": {
+                "fn_with_ui": qwen_ui,
+                "fn_without_ui": qwen_noui,
+                "can_multi_thread": True,
+                "endpoint": None,
+                "max_token": 129024,
+                "tokenizer": tokenizer_gpt35,
+                "token_cnt": get_token_num_gpt35,
+            },
+            "dashscope-qwen3-32b": {
+                "fn_with_ui": qwen_ui,
+                "fn_without_ui": qwen_noui,
+                "can_multi_thread": True,
+                "endpoint": None,
+                "max_token": 129024,
+                "tokenizer": tokenizer_gpt35,
+                "token_cnt": get_token_num_gpt35,
             }
         })
     except:
         logger.error(trimmed_format_exc())
+
 # -=-=-=-=-=-=- 零一万物模型 -=-=-=-=-=-=-
 yi_models = ["yi-34b-chat-0205","yi-34b-chat-200k","yi-large","yi-medium","yi-spark","yi-large-turbo","yi-large-preview"]
 if any(item in yi_models for item in AVAIL_LLM_MODELS):
